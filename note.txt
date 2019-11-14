@@ -1,0 +1,60 @@
+1、nginx安装
+    cd nginx-1.10.0
+    ./configure --prefix=/opt/nginx --sbin-path=/usr/bin/nginx
+    make && make install
+    nginx启动
+    systemctl stop firewalld
+    nginx -s stop/reload
+
+    windows下:- 启动：start nginx.exe
+             - 停止：nginx.exe -s stop
+             - 重新加载：nginx.exe -s reload
+
+2、FastDFS（Distributed File System）
+    /etc/init.d/fdfs_trackerd
+
+    service fdfs_trackerd start
+    chkconfig fdfs_trackerd on
+
+    service fdfs_storaged start
+    chkconfig fdfs_storaged on
+
+    mkdir -p /leyou/fdfs/storage
+    mkdir -p /home/fdfs/tracker
+    cd /etc/fdfs 配置文件地址
+
+    测试
+    /usr/bin/fdfs_upload_file client.conf /tmp/1.PNG
+    返回：group1/M00/00/00/wKgBaVx73F-AYr5rAAAIltUvf68571.PNG
+    group1:组
+    M00：store_path0
+    /00/00：磁盘路径
+
+    由于配置有问题，现在只能在根目录下 "/" 执行nginx
+3、elasticsearch
+    su leyou
+    cd /home/leyou
+    ./elasticsearch/config/elasticsearch 启动服务
+
+    ES基于Lucene的全文检索库
+    索引（集）indices                  Databases 数据库
+        类型 types                     Table 数据表
+            文档 document              Row行
+                字段 field             Columns 列
+
+    aggregations 聚合
+
+4、rabbitmq
+    http://192.168.1.102:15672/#/   guest/guest
+5、aliyun
+    AccessKeyID：
+    LTAIMUHjoudPEQTk
+    AccessKeySecret：
+    pwZQoMElQG7l1CZCVq7fkJoYKSdIMY
+
+6、JWT(Json Web Token)
+    包含Header(Base64加密)/Payload(Base64加密)/Signature（可以使用RSASHA256，对之前的数据进行校验）
+7、分布式事务
+    1、分段提交
+    2、TCC，有两套执行流程，一个正常流程，一个回滚流程
+    3、异步消息确认，消息不丢失，就会一直重试直到成功

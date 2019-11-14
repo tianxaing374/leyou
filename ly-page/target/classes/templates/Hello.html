@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+    <div>
+
+        <ul>
+            <li th:each="use : ${users}">
+                <span th:text="${use.name}"></span>
+                <span th:text="${use.age}"></span>
+            </li>
+        </ul>
+
+        msg:<span th:text="${msg}"></span>
+        <div>
+            <span>thy内置对象,#ctx,#request,#response,#session,#servletContext</span>
+            <div th:text="${#ctx}"></div>
+            <div>------------------------</div>
+            <div th:text="${#request}"></div>
+            <div>------------------------</div>
+            <div th:text="${#response}"></div>
+            <div>------------------------</div>
+            <div th:text="${#session}"></div>
+            <div>------------------------</div>
+            <div th:text="${#servletContext}"></div>
+        </div>
+    </div>
+    <!--js内联模板-->
+<script th:inline="javascript">
+    const users = /*[[${users}]]*/[];
+    users.forEach(u=>{
+        console.log(u)
+    })
+</script>
+</body>
+</html>
